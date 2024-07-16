@@ -195,13 +195,24 @@ class FrozenLakeEnv(Env):
     `None` a random 8x8 map with 80% of locations frozen will be generated.
 
     <a id="is_slippy"></a>`is_slippery=True`: If true the player will move in intended direction with
-    probability of 1/3 else will move in either perpendicular direction with
+    default probability of 1/3 else will move in either perpendicular direction with
     equal probability of 1/3 in both directions.
 
     For example, if action is left and is_slippery is True, then:
     - P(move left)=1/3
     - P(move up)=1/3
     - P(move down)=1/3
+
+    <a id="slip_probability"></a>'slip_probability=2.0/3.0': This parameter allows us to configure the
+    probability of slipping (only takes effect if is_slippery=True). The probability of moving in either
+    perpendicular direction is equal to half the probability of slip, and the probability of
+    moving in the intended direction is 1-slip_probability. This maintains existing behaviour for
+    is_slippy=True where the default value is used.
+
+    For example, if action is left, is_slippery is True and slip_probability=1.0/2.0
+    - P(move left)=1-1/2 = 1/2
+    - P(move up) = (1/2)/2 = 1/4
+    - P(move down) = (1/2)/2 = 1/4
 
 
     ## Version History
