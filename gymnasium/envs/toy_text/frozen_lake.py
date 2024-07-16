@@ -221,6 +221,7 @@ class FrozenLakeEnv(Env):
         desc=None,
         map_name="4x4",
         is_slippery=True,
+        slip_probability=2.0/3.0
     ):
         if desc is None and map_name is None:
             desc = generate_random_map()
@@ -237,6 +238,7 @@ class FrozenLakeEnv(Env):
         self.initial_state_distrib /= self.initial_state_distrib.sum()
 
         self.P = {s: {a: [] for a in range(nA)} for s in range(nS)}
+
 
         def to_s(row, col):
             return row * ncol + col
@@ -270,9 +272,10 @@ class FrozenLakeEnv(Env):
                         li.append((1.0, s, 0, True))
                     else:
                         if is_slippery:
-                            for b in [(a - 1) % 4, a, (a + 1) % 4]:
+                            li.append((1.0-p, *update_probability_matrix(row, col, a)))
+                            for b in [(a - 1) % 4, (a + 1) % 4]:
                                 li.append(
-                                    (1.0 / 3.0, *update_probability_matrix(row, col, b))
+                                    (p/2.0, *update_probability_matrix(row, col, b))
                                 )
                         else:
                             li.append((1.0, *update_probability_matrix(row, col, a)))
