@@ -309,7 +309,7 @@ class FrameStackObservation(
     Example:
         >>> import gymnasium as gym
         >>> from gymnasium.wrappers import FrameStackObservation
-        >>> env = gym.make("CarRacing-v2")
+        >>> env = gym.make("CarRacing-v3")
         >>> env = FrameStackObservation(env, stack_size=4)
         >>> env.observation_space
         Box(0, 255, (4, 96, 96, 3), uint8)
@@ -557,9 +557,9 @@ class MaxAndSkipObservation(
         >>> wrapped_obs0, *_ = wrapped_env.reset(seed=123)
         >>> wrapped_obs1, *_ = wrapped_env.step(1)
         >>> np.all(obs0 == wrapped_obs0)
-        np.True_
+        True
         >>> np.all(wrapped_obs1 == skip_and_max_obs)
-        np.True_
+        True
 
     Change logs:
      * v1.0.0 - Initially add
